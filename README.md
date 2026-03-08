@@ -1,6 +1,6 @@
-# The First Thing I did with MongoDB Atlas Stream processing was CEP
+# MongoDB Atlas Stream Processing: No Sinks, No Flink
 
-This project uses terraform to reproduce and illustrate my initial work with Confluent Cloud and MongoDB Atlas Stream Processing. 
+This project uses terraform to reproduce and illustrate my initial work with Confluent Cloud and MongoDB Atlas Stream Processing.
 
 ##  Project Structure
 
@@ -8,17 +8,17 @@ Each phase uses the Datagen source connector to populate a Kafka topic with stoc
 * unique ticker count per time window
 * trades per unique ticker per time window
 * min max trades per ticker per time window
-* CEP: "bounce pattern" per ticker per time window
+* CEP: "bounce pattern" per ticker per time window, ported from the FlinkSQL example at flink.apache.org
 
 ---
-### Confluent Cloud MongoDB Atlas Sink Connector
+### No Flink: Processing a collection populated by a sink connector
 
 ![Via Sink Connector](./phase-1-diagram.png "Sink Connector")
 
 * **`01-terraform-atlas-sink/`**: The "Connector" pattern. Uses the Confluent Cloud Managed Atlas Sink Connector to move raw data from Kafka into a MongoDB collection. The four processors populate dirived collections with aggregate data akin to a streaming materialized view.
 
 ---
-### Direct from Atlas Stream Processing
+### No Flink, No Sinks: Processing a stream directly from the source topic
 
 ![Direct from ASP](./phase-2-diagram.png "Atlas Stream Processing")
 * **`02-terraform-asp/`**: The "Direct" pattern. Leverages **Atlas Stream Processing (ASP)** to connect directly to Kafka as a consumer, performing Complex Event Processing (CEP) and windowed aggregations in-flight.
