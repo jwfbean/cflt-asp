@@ -10,12 +10,14 @@ Each phase uses the Datagen source connector to populate a Kafka topic with stoc
 * min max trades per ticker per time window
 * CEP: "bounce pattern" per ticker per time window, ported from the FlinkSQL example at flink.apache.org
 
+These processors populate derived collection, approximating a **streaming materialized view**.
+
 ---
 ### No Flink: Processing a collection populated by a sink connector
 
 ![Via Sink Connector](./phase-1-diagram.png "Sink Connector")
 
-* **`01-terraform-atlas-sink/`**: The "Connector" pattern. Uses the Confluent Cloud Managed Atlas Sink Connector to move raw data from Kafka into a MongoDB collection. The four processors populate dirived collections with aggregate data akin to a streaming materialized view.
+* **`01-terraform-atlas-sink/`**: The "Connector" pattern. Uses the Confluent Cloud Managed Atlas Sink Connector to move raw data from Kafka into a MongoDB collection. 
 
 ---
 ### No Flink, No Sinks: Processing a stream directly from the source topic
