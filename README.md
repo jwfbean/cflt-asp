@@ -11,7 +11,7 @@ Each phase uses the Datagen source connector to populate a Kafka topic with stoc
 * min max trades per ticker per time window
 * CEP: "bounce pattern" per ticker per time window, ported from the FlinkSQL example at flink.apache.org
 
-These processors populate derived collection, approximating a **streaming materialized view**.
+These processors populate a derived collection, approximating a **streaming materialized view**.
 
 ---
 ### No Flink: Processing a collection populated by a sink connector
