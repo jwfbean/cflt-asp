@@ -16,15 +16,17 @@ These processors populate a derived collection, approximating a **streaming mate
 ---
 ### No Flink: Processing a collection populated by a sink connector
 
-![Via Sink Connector](./phase-1-diagram.png "Sink Connector")
-
 * **`01-terraform-atlas-sink/`**: The "Connector" pattern. Uses the Confluent Cloud Managed Atlas Sink Connector to move raw data from Kafka into a MongoDB collection. 
+
+![Via Sink Connector](./phase-1-diagram.png "Sink Connector")
 
 ---
 ### No Flink, No Sinks: Processing a stream directly from the source topic
 
-![Direct from ASP](./phase-2-diagram.png "Atlas Stream Processing")
 * **`02-terraform-asp/`**: The "Direct" pattern. Leverages **Atlas Stream Processing (ASP)** to connect directly to Kafka as a consumer, performing Complex Event Processing (CEP) and windowed aggregations in-flight.
+  
+![Direct from ASP](./phase-2-diagram.png "Atlas Stream Processing")
+
 
 ---
 
