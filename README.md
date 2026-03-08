@@ -1,6 +1,5 @@
-# MongoDB Atlas + Confluent Cloud: Stock Trade Processing
+# The First Thing I did with MongoDB Atlas Stream processing
 
-This project demonstrates two evolutionary patterns for processing real-time Kafka data from Confluent Cloud into MongoDB Atlas using Terraform.
 
 ## 🏗️ Project Structure
 
@@ -11,16 +10,6 @@ The repository is split into two phases of architectural maturity:
 
 ---
 
-## ⚡ Architecture Comparison
-
-| Feature | 01 Atlas Sink | 02 Atlas Stream Processing |
-| :--- | :--- | :--- |
-| **Logic Location** | Passive (Database Sink) | Active (In-flight Pipeline) |
-| **Complexity** | Simple "Pipe" | Stateful Aggregations (CEP) |
-| **ACL Requirements** | Standard Topic Write | Cluster `DESCRIBE` + Group `READ` |
-| **Handshake** | Managed by Confluent | Direct SASL_SSL Handshake |
-
----
 
 ## 🚀 Deployment Guide
 
@@ -35,17 +24,3 @@ The repository is split into two phases of architectural maturity:
 3. **Deploy Phase 2**: Navigate to `/02`. Note that this will establish a direct connection from the Atlas Stream Instance to the Confluent Brokers.
 
 ---
-
-## 💡 Key Learnings & Troubleshooting
-
-### 1. The "Locksmith" vs. "Guest" ACL Pattern
-When using ASP, the Service Account used by the connection needs more than just topic access. It requires:
-* **Cluster `DESCRIBE`**: To allow Atlas to map the partitions.
-* **Group `READ`**: To allow Atlas to manage its own offsets.
-* **Topic `READ`**: To pull the actual trade data.
-
-### 2. Watermarks and Windowing
-Stateful processors (CEP and Ticker counts) rely on the passage of time. If data isn't flowing to all partitions, use a `partitionIdleTimeout` (e.g., `1s`) to ensure the watermark advances and windows close.
-
-### 3. Explicit Time Fields
-Unlike the Sink Connector, ASP needs to know which field to use for event
