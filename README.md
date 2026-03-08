@@ -39,10 +39,9 @@ These processors populate a derived collection, approximating a **streaming mate
 * MongoDB Atlas Project & API Keys
 
 ### Setup Instructions
-1. **Initialize Environment**: Ensure your `terraform.tfvars` contains your specific organization and project IDs.
-2. **Deploy Phase 1**: Navigate to `/01` to establish the baseline ingestion.
-3. **Deploy Phase 2**: Navigate to `/02`. Note that this will establish a direct connection from the Atlas Stream Instance to the Confluent Brokers.
-
-In either directory, `terraform apply` will set up the demo.
+1. **Deploy Phase 1**: Navigate to `/01` to establish the baseline ingestion.
+2. **Deploy Phase 2**: Navigate to `/02`. Note that this will establish a direct connection from the Atlas Stream Instance to Confluent Cloud.
+3. **Initialize Environment**: Ensure your `terraform.tfvars` contains your specific organization, project IDs and authentication credentials.
+4. In either directory, `terraform apply` will set up and run the demo.
 
 ---
