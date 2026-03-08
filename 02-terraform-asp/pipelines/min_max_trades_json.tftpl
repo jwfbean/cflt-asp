@@ -1,0 +1,56 @@
+[
+  {
+    "$source": {
+      "connectionName": "${source_connection_name}",
+      "topic": "${kafka_topic}",
+      "partitionIdleTimeout": {"size": 1, "unit": "second"} 
+    }
+  },
+  {
+    "$addFields": {
+      "stream_metadata": {
+        "$meta": "stream"
+      }
+    }
+  },
+  {
+    "$tumblingWindow": {
+      "interval": {
+        "size": 30,
+        "unit": "second"
+      },
+      "pipeline": [
+      {
+        "$group": {
+          "_id": "$symbol",
+          "tradeCount": { "$sum": 1 },
+          "minTrade": { "$min": "$price" },
+          "maxTrade": { "$max": "$price" }
+        }
+      },
+      {
+        "$project": {
+          "_id": 0,
+          "symbol": "$_id",
+          "tradeCount": 1,
+          "minTrade": 1,
+          "maxTrade": 1,
+          "windowStart": "$window.start",
+          "windowEnd": "$window.end"
+        }
+      }
+      ]
+    }
+  },
+  {
+    "$merge": {
+      "into": {
+        "connectionName": "${sink_connection_name}",
+        "db": "${db_name}",
+        "coll": "${output_collection}"
+      },
+      "whenMatched": "replace",
+      "whenNotMatched": "insert"
+    }
+  }
+]

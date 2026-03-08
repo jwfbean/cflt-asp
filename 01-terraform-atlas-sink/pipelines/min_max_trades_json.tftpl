@@ -1,0 +1,64 @@
+[
+  {
+    "$source": {
+      "connectionName": "${connection_name}",
+      "db": "${db_name}",
+      "coll": "${input_collection}",
+      "timeField": { 
+        "$toDate": "$fullDocument.kconnect_ts" 
+      }
+    }
+  },
+  {
+    "$replaceRoot": {
+      "newRoot": "$fullDocument"
+    }
+  },
+  {
+    "$addFields": {
+      "stream_metadata": {
+        "$meta": "stream"
+      }
+    }
+  },
+  {
+    "$tumblingWindow": {
+      "interval": {
+        "size": 30,
+        "unit": "second"
+      },
+      "pipeline": [
+      {
+        "$group": {
+          "_id": "$symbol",
+          "tradeCount": { "$sum": 1 },
+          "minTrade": { "$min": "$price" },
+          "maxTrade": { "$max": "$price" }
+        }
+      },
+      {
+        "$project": {
+          "_id": 0,
+          "symbol": "$_id",
+          "tradeCount": 1,
+          "minTrade": 1,
+          "maxTrade": 1,
+          "windowStart": "$window.start",
+          "windowEnd": "$window.end"
+        }
+      }
+      ]
+    }
+  },
+  {
+    "$merge": {
+      "into": {
+        "connectionName": "${connection_name}",
+        "db": "${db_name}",
+        "coll": "${output_collection}"
+      },
+      "whenMatched": "replace",
+      "whenNotMatched": "insert"
+    }
+  }
+]

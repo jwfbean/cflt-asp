@@ -1,0 +1,54 @@
+[
+  {
+    "$source": {
+      "connectionName": "${source_connection_name}",
+      "topic": "${kafka_topic}",
+       "timeField": {
+        "$toDate": "$fullDocument.kconnect_ts"
+      }
+      "partitionIdleTimeout": {"size": 1, "unit": "second"} 
+    }
+  },
+  {
+    "$addFields": {
+      "price": { "$toDouble": "$fullDocument.price" },
+      "symbol": "$fullDocument.symbol"
+    }
+  },
+  {
+    "$tumblingWindow": {
+      "interval": { "size": 1, "unit": "minute" },
+      "pipeline": [
+        {
+          "$group": {
+            "_id": "$symbol",
+            "max_price": { "$max": "$price" },
+            "min_price": { "$min": "$price" },
+            "last_price": { "$last": "$price" }
+          }
+        },
+        {
+          "$set": {
+            "is_bounce": {
+              "$function": {
+                "body": "function(max, min, last) { const drop = (max - min) / max; const recovery = (last - min) / min; return drop > 0.05 && recovery > 0.02; }",
+                "args": ["$max_price", "$min_price", "$last_price"],
+                "lang": "js"
+              }
+            }
+          }
+        },
+        { "$match": { "is_bounce": true } }
+      ]
+    }
+  },
+  {
+    "$merge": {
+      "into": {
+        "connectionName": "${sink_connection_name}",
+        "db": "${db_name}",
+        "coll": "ticker-bounces"
+      }
+    }
+  }
+]
