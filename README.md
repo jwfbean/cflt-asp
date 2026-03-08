@@ -1,5 +1,5 @@
 # MongoDB Atlas Stream Processing
-## No Sinks! - No Flink!
+### No Sinks! - No Flink!
 
 This project uses terraform to reproduce and illustrate my initial work with Confluent Cloud and MongoDB Atlas Stream Processing.
 
