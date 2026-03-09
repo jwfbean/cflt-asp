@@ -3,9 +3,6 @@
     "$source": {
       "connectionName": "${source_connection_name}",
       "topic": "${kafka_topic}",
-       "timeField": {
-        "$toDate": "$fullDocument.kconnect_ts"
-      }
       "partitionIdleTimeout": {"size": 1, "unit": "second"} 
     }
   },
