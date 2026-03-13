@@ -1,0 +1,5 @@
+bootstrap.servers=YOUR_BOOTSTRAP_SERVER:9092
+security.protocol=SASL_SSL
+sasl.mechanisms=PLAIN
+sasl.username=YOUR_API_KEY
+sasl.password=YOUR_API_PASSWORD
