@@ -1,4 +1,4 @@
-# rtabench: Confluent Cloud & MongoDB Atlas Stream Processing
+# (IN PROGRESS) rtabench: Confluent Cloud & MongoDB Atlas Stream Processing
 
 This project attempts to show how Apache Kafka (in **Confluent Cloud**) and MongoDB Atlas Stream Processing can be used to
 convert real-time analytics data models and queries (provided by the RTABench project) to streaming
@@ -28,7 +28,7 @@ terraform apply
 Get the secrets:
 ```bash
 terraform output -json
-
+```
 Copy `mongodb_atlas_connection_string` and put it the `CONNECTION_STRING` environment variable
 
 `export CONNECTION_STRING=mongodb_atlas_connection_string`
