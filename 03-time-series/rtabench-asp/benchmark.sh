@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CONNECTION_STRING="mongodb+srv://jwfbean-rtabench:9SXqxTnIsO4epnGg@jwfbean-rtabench.0rr9yb.mongodb.net/rtabench" 
+CONNECTION_STRING=$CONENCTION_STRING
 
 # Download the dataset
 wget --no-verbose --continue 'https://rtadatasets.timescale.com/customers.csv.gz'
