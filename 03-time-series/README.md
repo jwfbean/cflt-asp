@@ -17,9 +17,9 @@ In the existing setup, setup-stream.sh populates everything except for order-eve
 Then, the javascript file `create-order-events.sh` contains an ASP pipeline for reading order-events from a Kafka topic and enriching
 against ASP via `$lookup` into a time series colleciton which can serve as an "everything table" to best handle aggregate or analytic queries.
 
-TODO: Stream orders and order-items, enrich against customers and items into order-details collection using $merge.
-TODO: stream order-events, enrich against order-details using $merge.
-TODO: Model an RTABench query into a stream.
+* TODO: Stream orders and order-items, enrich against customers and items into order-details collection using $merge.
+* TODO: stream order-events, enrich against order-details using $merge.
+* TODO: Model an RTABench query into a stream.
 
 ---
 
