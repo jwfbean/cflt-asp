@@ -1,7 +1,7 @@
 # (IN PROGRESS) rtabench: Confluent Cloud & MongoDB Atlas Stream Processing
 
 This project attempts to show how Apache Kafka (in **Confluent Cloud**) and MongoDB Atlas Stream Processing can be used to
-convert real-time analytics data models and queries (provided by the RTABench project) to streaming
+convert real-time analytics data models and queries (provided by the RTABench project courtesy of Tiger Data) to streaming
 queries.
 
 
@@ -12,6 +12,14 @@ queries.
 * **Atlas Stream Processing**: A managed processing layer that bridges Kafka and Atlas, providing real-time ingestion and transformation.
 * **Automated Networking**: Terraform dynamically manages Confluent Egress IP whitelisting within the MongoDB Atlas Project Access List.
 
+---
+In the existing setup, setup-stream.sh populates everything except for order-events. This is a lot of data so it takes a while. 
+Then, the javascript file `create-order-events.sh` contains an ASP pipeline for reading order-events from a Kafka topic and enriching
+against ASP via `$lookup` into a time series colleciton which can serve as an "everything table" to best handle aggregate or analytic queries.
+
+TODO: Stream orders and order-items, enrich against customers and items into order-details collection using $merge.
+TODO: stream order-events, enrich against order-details using $merge.
+TODO: Model an RTABench query into a stream.
 
 ---
 
