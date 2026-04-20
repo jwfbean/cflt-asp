@@ -1,3 +1,4 @@
+```mermaid
 flowchart LR
     subgraph datagen["Data Generator (Python)"]
         DG[main.py]
@@ -44,3 +45,4 @@ flowchart LR
 
     style todo fill:#f5f5f5,stroke:#ccc,color:#999
     style NEXT fill:#f5f5f5,stroke:#ccc,color:#999
+```
